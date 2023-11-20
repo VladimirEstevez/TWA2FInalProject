@@ -1,0 +1,42 @@
+stages:
+  - install
+  - lint
+  - documentation
+cache:
+  paths:
+    - node_modules/ # This is the folder where the dependencies are stored
+install-job:
+  stage: install
+  script:
+    - npm ci
+
+lint-job:
+  stage: lint
+  script:
+    - npm run lint
+# build-job:
+#   stage: build
+#   script:
+#   - echo "Building..."
+#   - npm run build
+#   - echo "Bundling..."
+#   - npm run bundle
+#   artifacts:
+#     name: "build"
+#     paths:
+#     - dist/bundle.zip
+#     untracked: true
+
+doc-job:
+  stage: documentation
+  script:
+  - echo "Documenting..."
+  - npm run doc
+  artifacts:
+    name: "documentation"
+    paths:
+    - docs/*
+    untracked: true
+    when: on_success
+#  - npm run sync
+#  environment: dev
